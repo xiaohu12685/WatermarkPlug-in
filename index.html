@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <link rel="stylesheet" href="./css/style.css">
+  <script src="https://pv.sohu.com/cityjson"></script>
+  <script src="js/watermark.js"></script>
+  <script src="js/random_id.js"></script>
+</head>
+<body>
+
+
+  <script>
+    //onload时触发水印绘制
+    let { cip = "", cid = "", cname = "" } = returnCitySN;
+    window.onload = function() {
+      watermark({ watermark_txt: cip + "\n" + cid + "\n" + cname });
+    };  
+    console.log(processID());
+  </script>
+</body>
+</html>
