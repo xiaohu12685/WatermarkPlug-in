@@ -1,3 +1,28 @@
+processID = () => {
+  let id = localStorage.getItem("id");
+  //判断本地是否有id
+  if(id){
+    return id;
+  }
+  //生成随机id
+  const _id = 'xxxxxxxx-xxxx-xxxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      const r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
+  });
+
+  //发出一个请求,查看服务器上是否有此id
+  // axios.get('http://www.baidu.com').then(function (response) {
+  //   if(!response.code == 200){
+  //     processID();
+  //     return;
+  //   }
+  // })
+
+  //存储id
+  localStorage.setItem('id',_id)
+  return _id;
+}
+
 //获取滚动条width
 function getScrollbarWidth() {
   var scrollDiv = document.createElement("div");
@@ -13,17 +38,17 @@ function watermark(settings) {
   var defaultSettings = {
     watermark_txt: "",
     watermark_x: 10, //水印起始位置x轴坐标
-    watermark_y: 30, //水印起始位置Y轴坐标
+    watermark_y: 50, //水印起始位置Y轴坐标
     watermark_rows: 20, //水印行数
     watermark_cols: 20, //水印列数
     watermark_x_space: 100, //水印x轴间隔
     watermark_y_space: 100, //水印y轴间隔
     watermark_color: "#000000", //水印字体颜色
-    watermark_alpha: 0.2, //水印透明度
+    watermark_alpha: 0.15, //水印透明度
     watermark_fontsize: "15px", //水印字体大小
     watermark_font: "微软雅黑", //水印字体
-    watermark_width: 120, //水印宽度
-    watermark_height: 40, //水印长度
+    watermark_width: 200, //水印宽度
+    watermark_height: 65, //水印长度
     watermark_angle: 35 //水印倾斜度数
   };
   //采用配置项替换默认值，作用类似jquery.extend
@@ -153,3 +178,12 @@ function watermark(settings) {
   }
   document.body.appendChild(oTemp);
 }
+window.onload = function() {
+  //onload时触发水印绘制
+  let { cip = "", cid = "", cname = "" } = returnCitySN;
+  if(!cname){
+    return false;
+  }
+  let _id = processID();
+  watermark({ watermark_txt: cip + "\n" + cid + "\n" + cname + "\n" + _id });
+};  
